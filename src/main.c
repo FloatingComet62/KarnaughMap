@@ -1,7 +1,7 @@
 #ifndef TEST
 #include "src.h"
 
-Bitstream mapFromBitstream(Bitstream* bitstream, u32 mask_size, u32 offset) {
+Bitstream map_from_bitstream(Bitstream* bitstream, u32 mask_size, u32 offset) {
   Bitstream output = bitstream_init(mask_size);
   for (u32 j = 0; j < mask_size; j++) {
     if (!bitstream_getbit(bitstream, offset + j)) {
@@ -15,7 +15,7 @@ Bitstream mapFromBitstream(Bitstream* bitstream, u32 mask_size, u32 offset) {
 u8 bitwise_and(u8 x_bit, u8 y_bit) { return x_bit & y_bit; }
 u8 bitwise_invert(u8 bit) { return bit == 0 ? 1 : 0; };
 
-bool checkMask(Bitstream* input, Bitstream* mask) {
+bool check_mask(Bitstream* input, Bitstream* mask) {
   Bitstream weighted_mask = bitstream_bitwise(input, mask, &bitwise_and);
   return bitstream_eq(&weighted_mask, input);
 }
@@ -42,14 +42,14 @@ int main() {
 
   for (u32 i = 0; i < n; i++) {
     Bitstream variable_mask =
-        mapFromBitstream(&masks, powered_n, i * powered_n);
+        map_from_bitstream(&masks, powered_n, i * powered_n);
     Bitstream complement_variable_mask =
         bitstream_bitwise_map(&variable_mask, &bitwise_invert);
 
-    if (checkMask(&input, &variable_mask)) {
+    if (check_mask(&input, &variable_mask)) {
       printf("%c", 'A' + i);
     }
-    if (checkMask(&input, &complement_variable_mask)) {
+    if (check_mask(&input, &complement_variable_mask)) {
       printf("%c", 'a' + i);
     }
 
