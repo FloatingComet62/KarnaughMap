@@ -1,9 +1,9 @@
 #ifndef TEST
 #include "src.h"
 
-Bitstream mapFromBitstream(Bitstream* bitstream, u32 maskSize, u32 offset) {
-  Bitstream output = bitstream_init(maskSize);
-  for (u32 j = 0; j < maskSize; j++) {
+Bitstream mapFromBitstream(Bitstream* bitstream, u32 mask_size, u32 offset) {
+  Bitstream output = bitstream_init(mask_size);
+  for (u32 j = 0; j < mask_size; j++) {
     if (!bitstream_getbit(bitstream, offset + j)) {
       continue;
     }
